@@ -20,4 +20,16 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/insert", (req, res) => {
+  MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(dbName);
+    var myobj = { name: "aboli", address: "Hinjewadi" };
+    dbo.collection("videos").insertOne(myobj, function (err, res) {
+      if (err) throw err;
+      db.close();
+    });
+  });
+  res.send("1 document inserted");
+});
 app.listen(5000);
